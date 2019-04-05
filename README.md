@@ -11,7 +11,7 @@ GET   /tasks/{task_id}         -- Devuelve una tarea que coincida con el id {tas
 
 GET   /tasks/                  -- Devuelve todas las tareas
 
-GET  /tasks/state/{state_id}  -- Devuelve todas las tareas que se encuentren en un estado con id {state_id}
+--- REVISAR ---- GET  /tasks/state/{state_id}  -- Devuelve todas las tareas que se encuentren en un estado con id {state_id}
 
 POST /tasks/                  -- Crea una tarea
 
@@ -33,3 +33,16 @@ POST /users/            -- Crea un usuario
 PUT /users/{user_id}    -- Actualiza un usuario con id {user_id}
 
 DELETE /users/{user_id} -- Borra un usuario con id {user_id}
+
+States
+
+GET  /states/            -- Devuelve todos los estados
+
+GET  /states/{state_id}   -- Devuelve un estado que coincida con el id {state_id}
+
+POST /states/            -- Crea un estado
+
+PUT /states/{state_id}    -- Actualiza un esatdo con id {state_id}
+
+DELETE /states/{state_id} -- Borra un estado con id {state_id}
+
