@@ -9,23 +9,24 @@ Tasks
 
 GET   /tasks/{task_id}         -- Devuelve una tarea que coincida con el id {task_id}
 
-GET   /tasks/list_all          -- Devuelve todas las tareas
+GET   /tasks/                  -- Devuelve todas las tareas
 
-GET   /tasks/user/{user_id}    -- Devuelve todas las tareas de un usuario con el id {user_id}
+GET  /tasks/state/{state_id}  -- Devuelve todas las tareas que se encuentren en un estado con id {state_id}
 
-GET   /tasks/state/{state_id}  -- Devuelve todas las tareas que se encuentren en un estado con id {state_id}
+POST /tasks/                  -- Crea una tarea
 
-POST  /tasks/                  -- Crea una tarea
-
-PUT   /tasks/{task_id}         -- Actualiza una tarea con id {task_id}
+PUT  /tasks/{task_id}         -- Actualiza una tarea con id {task_id}
 
 DELETE  /tasks/{task_id}       -- Borra una tara con id {task_id}
+
 
 Users
 
 GET  /users/            -- Devuelve todos los usuarios
 
 GET  /users/{user_id}   -- Devuelve un usuario que coincida con el id {user_id}
+
+GET  /users/{user_id}/tasks    -- Devuelve todas las tareas asignadas a un usuario con el id {user_id}
 
 POST /users/            -- Crea un usuario
 
