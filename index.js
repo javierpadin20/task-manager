@@ -10,6 +10,9 @@ const port = process.env.PORT || 3001;
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+var listTasks=[];
+
+var contador = 0;
 
 /** GET */ 
 
@@ -20,7 +23,7 @@ app.use(bodyParser.json());
 */ 
 app.get('/api/tasks', (req, res) => {
   //res.send(`[GET] Lista de tareas - query params: ${req.query.state}`);
-  res.send(200, {tasks: []});
+  res.send(200, listTasks);
 });
 
 /* 
@@ -29,7 +32,7 @@ app.get('/api/tasks', (req, res) => {
   Devuelve una tarea especifica.
 */
 app.get('/api/tasks/:id', (req, res) => {
-  res.send(`[GET] Tarea ID ${req.params.id}`);
+  res.send(`[GET] Tarea ID ${req.params.id} - ${listTasks[req.params.id].id}`);
 });
 
 /** POST */
@@ -40,8 +43,16 @@ app.get('/api/tasks/:id', (req, res) => {
 */
 app.post('/api/tasks', (req, res) => {
   //res.send(`[POST] Tarea "${req.query.title}" creada. \n Descripcion: ${req.query.description}`);
-  console.log(req.body)
-  res.status(200).send({message: 'La tarea se ha creado.'})
+  console.log("POST");
+
+  var task = new Object();
+  task.id = contador++;
+  task.descripcion = req.params.descripcion;
+
+  console.log("id" + task.id);
+  listTasks.push(task);
+
+  res.status(200).send({message: `La tarea se ha creado. ID: ${task.id}`})
 });
 
 /** PUT */
