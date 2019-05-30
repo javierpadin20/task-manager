@@ -47,7 +47,7 @@ app.post('/api/tasks', (req, res) => {
 
   var task = new Object();
   task.id = contador++;
-  task.descripcion = req.params.descripcion;
+  task.descripcion = req.body.descripcion;
 
   console.log("id" + task.id);
   listTasks.push(task);
@@ -72,6 +72,18 @@ app.put('/api/tasks/:id', (req, res) => {
    Atributos: title, description.
 */
 app.delete('/api/tasks/:id', (req, res) => {
+  console.log("DELETE")
+  
+  for(var i = 0; i < listTasks.length; i++) {
+    console.log("Valor Array:" + listTasks[i].id)
+    console.log("Valor Param:" + req.params.id)
+    if (listTasks[i].id== req.params.id) {
+          console.log("se encuentra objeto!.");
+          listTasks.splice(i,1);
+        break;
+    }
+}
+
   res.send(`[DELETE] Tarea ${req.params.id} borrada.`);
 });
 
