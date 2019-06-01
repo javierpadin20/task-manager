@@ -11,8 +11,12 @@ GET  /tasks/{task_id}         -- Devuelve una tarea que coincida con el id {task
 GET  /tasks/                  -- Devuelve todas las tareas
 
 POST /tasks/                  -- Crea una tarea
+                              -- Parametros
+                                      -- descripcion
 
 PUT  /tasks/{task_id}         -- Actualiza una tarea con id {task_id}
+                              -- Parametros
+                                      -- descripcion
 
 DELETE  /tasks/{task_id}       -- Borra una tara con id {task_id}
 
