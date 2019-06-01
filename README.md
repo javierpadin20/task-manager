@@ -1,6 +1,5 @@
 # task-manager
-Administrador de tareas personales. La aplicación posee un CRUD de usuarios y un CRUD de tareas. Las tareas se pueden asignar a un usuario, se puede cambiar de estado y listar tares por usuario, estado o listarlas todas.
-
+Administrador de tareas personales. La aplicación posee un CRUD de tareas. 
 
 Endpoint
 http://www.task-manager.com/api/
