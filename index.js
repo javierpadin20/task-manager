@@ -14,6 +14,12 @@ var listTasks=[];
 
 var contador = 0;
 
+var respuesta404 = {
+  error: true, 
+  codigo: 404, 
+  mensaje: 'Tarea no encontrada'
+ };
+
 /** GET */ 
 
 /* 
@@ -36,27 +42,21 @@ app.get('/api/tasks', (req, res) => {
 */
 app.get('/api/tasks/:id', (req, res) => {
 
-  var respuesta404 = {
-    error: true, 
-    codigo: 404, 
-    mensaje: 'Tarea no encontrada'
-   };
-
-  var taskParam;
+  var task;
 
   if(listTasks == undefined || listTasks.length < 1){
-    res.status(204).send();
+    res.send(204);
   }
 
   for(var i = 0; i < listTasks.length; i++) {
     if (listTasks[i].id== req.params.id) {
-          taskParam = listTasks[i];
+          task = listTasks[i];
           res.status(200).json({
-            taskParam
+            task
           })
       }
   }
-  res.status(404).send(respuesta404);
+    res.status(404).send(respuesta404);
 });
 
 /** POST */
@@ -73,7 +73,7 @@ app.post('/api/tasks', (req, res) => {
 
   listTasks.push(task);
 
-  res.status(200).send({message: `La tarea se ha creado: ${task}`})
+  res.status(200).send({message: `La tarea ha sido creada. ID ${task.id}`})
 });
 
 /** PUT */
@@ -85,22 +85,20 @@ app.post('/api/tasks', (req, res) => {
 app.put('/api/tasks/:id', (req, res) => {
 
   if(listTasks == undefined || listTasks.length < 1){
-    res.status(204).send();
+    res.status(404).send(respuesta404);
   }
   var taskUpdate;
   
   for(var i = 0; i < listTasks.length; i++) {
     if (listTasks[i].id== req.params.id) {
           taskUpdate = listTasks[i]
-          taskUpdate.descripcion = req.params.descripcion;
+          taskUpdate.descripcion = req.body.descripcion;
           res.status(200).json({
             taskUpdate
           })
       }
   }
   res.status(404).send(respuesta404);
-
-  res.send(`[PUT] Tarea ${req.params.id} actualizada.`);
 });
 
 /** DELETE */
@@ -113,16 +111,15 @@ app.delete('/api/tasks/:id', (req, res) => {
   console.log("DELETE")
   
   if(listTasks == undefined || listTasks.length < 1){
-    res.status(204).send();
+    res.status(404).send(respuesta404);
   }
   for(var i = 0; i < listTasks.length; i++) {
     if (listTasks[i].id== req.params.id) {
           listTasks.splice(i,1);
-        break;
+          res.status(200).send({message: `Tarea ${req.params.id} borrada.`});
     }
   }
-
-  res.status(200).send(`[DELETE] Tarea ${req.params.id} borrada.`);
+  res.status(404).send(respuesta404);
 });
 
 
