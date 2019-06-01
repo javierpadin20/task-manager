@@ -11,8 +11,6 @@ GET  /tasks/{task_id}         -- Devuelve una tarea que coincida con el id {task
 
 GET  /tasks/                  -- Devuelve todas las tareas
 
-GET  /tasks?state={state_id}  -- Devuelve todas las tareas que se encuentren en un estado con id {state_id}
-
 POST /tasks/                  -- Crea una tarea
 
 PUT  /tasks/{task_id}         -- Actualiza una tarea con id {task_id}
