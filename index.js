@@ -23,6 +23,9 @@ var contador = 0;
 */ 
 app.get('/api/tasks', (req, res) => {
   //res.send(`[GET] Lista de tareas - query params: ${req.query.state}`);
+
+  if(listTasks == undefined || listTasks.length < 1)
+    res.send(204);
   res.send(200, listTasks);
 });
 
@@ -32,7 +35,28 @@ app.get('/api/tasks', (req, res) => {
   Devuelve una tarea especifica.
 */
 app.get('/api/tasks/:id', (req, res) => {
-  res.send(`[GET] Tarea ID ${req.params.id} - ${listTasks[req.params.id].id}`);
+
+  var respuesta404 = {
+    error: true, 
+    codigo: 404, 
+    mensaje: 'Tarea no encontrada'
+   };
+
+  var taskParam;
+
+  if(listTasks == undefined || listTasks.length < 1){
+    res.status(204).send();
+  }
+
+  for(var i = 0; i < listTasks.length; i++) {
+    if (listTasks[i].id== req.params.id) {
+          taskParam = listTasks[i];
+          res.status(200).json({
+            taskParam
+          })
+      }
+  }
+  res.status(404).send(respuesta404);
 });
 
 /** POST */
@@ -42,17 +66,14 @@ app.get('/api/tasks/:id', (req, res) => {
    Atributos: title, description.
 */
 app.post('/api/tasks', (req, res) => {
-  //res.send(`[POST] Tarea "${req.query.title}" creada. \n Descripcion: ${req.query.description}`);
-  console.log("POST");
-
+  
   var task = new Object();
   task.id = contador++;
   task.descripcion = req.body.descripcion;
 
-  console.log("id" + task.id);
   listTasks.push(task);
 
-  res.status(200).send({message: `La tarea se ha creado. ID: ${task.id}`})
+  res.status(200).send({message: `La tarea se ha creado: ${task}`})
 });
 
 /** PUT */
@@ -62,6 +83,23 @@ app.post('/api/tasks', (req, res) => {
    Atributos: title, description.
 */
 app.put('/api/tasks/:id', (req, res) => {
+
+  if(listTasks == undefined || listTasks.length < 1){
+    res.status(204).send();
+  }
+  var taskUpdate;
+  
+  for(var i = 0; i < listTasks.length; i++) {
+    if (listTasks[i].id== req.params.id) {
+          taskUpdate = listTasks[i]
+          taskUpdate.descripcion = req.params.descripcion;
+          res.status(200).json({
+            taskUpdate
+          })
+      }
+  }
+  res.status(404).send(respuesta404);
+
   res.send(`[PUT] Tarea ${req.params.id} actualizada.`);
 });
 
@@ -74,17 +112,17 @@ app.put('/api/tasks/:id', (req, res) => {
 app.delete('/api/tasks/:id', (req, res) => {
   console.log("DELETE")
   
+  if(listTasks == undefined || listTasks.length < 1){
+    res.status(204).send();
+  }
   for(var i = 0; i < listTasks.length; i++) {
-    console.log("Valor Array:" + listTasks[i].id)
-    console.log("Valor Param:" + req.params.id)
     if (listTasks[i].id== req.params.id) {
-          console.log("se encuentra objeto!.");
           listTasks.splice(i,1);
         break;
     }
-}
+  }
 
-  res.send(`[DELETE] Tarea ${req.params.id} borrada.`);
+  res.status(200).send(`[DELETE] Tarea ${req.params.id} borrada.`);
 });
 
 
